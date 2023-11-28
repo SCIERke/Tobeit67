@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>This is Home page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- ตรงนี้ คือ frame work ครับจริงไม่ใช้ก็ได้ถ้าเป็นคนจริงพอ แต่ผมไม่ไหวจริงเขียนยาก -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bo  otstrap.min.js"></script>
+</head>
+<body>
+    <h1>This is Home page</h1>
+    
+    <!-- ตัวอย่าง html show data ครับ -->
+    <h4>U can try to show data</h4>
+    <button type="button" id="retrieveDataButton" name="retrieve" class="btn btn-success">Click me to show data!</button>
+    
+    <!-- สร้าง div เปล่า -->
+    <div id="userDataContainer" class="card-container"></div>
+
+
+
+
+    <!-- ตัวอย่าง html add data ครับ -->
+    <h4>U can try to add data</h4>
+    
+    <form class="row g-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Name</label>
+          <input type="name" class="form-control" id="name">
+        </div>
+        <div class="col-md-6">
+          <label for="surname" class="form-label">Surname</label>
+          <input type="surname" class="form-control" id="surname">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Address 2</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+        </div>
+        <div class="col-12">
+            <button type="button" id="addDataButton" name="add" class="btn btn-success">Click me to add data!</button>
+        </div>
+      </form>
+
+    
+
+
+
+
+
+</body>
+<script type="module">
+    //แนะนำว่าช่วงนี้อย่าไปยุ่งนะครับแค่ ก็อปไปเลย
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs , getDoc ,addDoc} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyDzTMrDk0uBKVHP_K2ntweZbSfBbLYyZQQ",
+        authDomain: "tobe-f2afc.firebaseapp.com",
+        projectId: "tobe-f2afc",
+        storageBucket: "tobe-f2afc.appspot.com",
+        messagingSenderId: "155536749020",
+        appId: "1:155536749020:web:d9285947c53fef43b7df19",
+        measurementId: "G-KLYCLFZXSW"
+    };
+    
+    //การ initilize ต่างๆ 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app);
+
+    //จริงๆ ตรงนี้ไม่ได้ใช้
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // เช็คว่า ล็อคอิน ดู component ในเว็ปได้
+            console.log("User information retrieved:", user);
+            alert("OK!");
+
+            //ส่วนนี้คือการ แสดง Data ออกมาในรูปอะไรก็ได้ครับ
+            document.getElementById("retrieveDataButton").addEventListener("click", async () => {
+                const loginName = user.email;
+
+                //กันหาไม่เจอเฉยๆ ไม่มีอะไร
+                if (!loginName) {
+                    console.error("Login name not available for the user.");
+                    return;
+                }
+
+                //ขอ Data จาก server | ลองไปดูใน Fire store ได้จะเข้าใจมากขึ้น
+                const colRef = collection(db, `users/${loginName}/additionalData`);
+
+                try {
+                    //ดึง object มา
+                    const querySnapshot = await getDocs(colRef);
+
+                   //สร้าง div เปล่า
+                    const userDataContainer = document.getElementById("userDataContainer");
+                    userDataContainer.innerHTML = ""; // Clear previous content
+
+                    //ดู Data แต่ละ document
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.id, " => ", doc.data());
+
+                        //สร้าง div ตรงนี้เป็นอะไรก็ได้ตามสะดวกเลยครับ
+                        const card = document.createElement("div");
+                        card.classList.add("card"); //ใส่ class ให้น้อง
+
+                        const userData = doc.data();
+
+                        console.log(doc);
+
+                        const userEmail = userData.email;
+                        
+                        //เขียนอะไรก็ได้ตามที่ต้องการ เสมือนเขียนลง div (ในแต่ละ card)
+                        card.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">${userEmail}</h5>
+                                <p class="card-text">${JSON.stringify(doc.data())}</p>
+                            </div>
+                        `;
+                        
+                        //ใส่ลง div ใหญ่
+                        userDataContainer.appendChild(card);
+                    });
+                } catch (error) {
+                    console.error("Error getting documents: ", error);
+                }
+            });
+
+
+
+            document.getElementById("addDataButton").addEventListener("click", async () => {
+                const userEmail = user.email;
+                var name =  document.getElementById("name").value;
+                var surname = document.getElementById("surname").value;
+                var address1 = document.getElementById("inputAddress").value;
+                var address2 = document.getElementById("inputAddress2").value;
+                var city = document.getElementById("inputCity").value;
+                var zip = document.getElementById("inputZip").value;
+
+                if (!userEmail) {
+                    console.error("User email not available.");
+                    return;
+                }
+            
+                const colRef = collection(db, `users/${userEmail}/additionalData`);
+            
+                try {
+                    
+                    const colSnapshot = await getDocs(colRef);
+            
+                    if (colSnapshot.empty) {
+                        
+                        await setDoc(colRef, {});
+                    }
+            
+                    // Add data to the collection
+                    const docRef = await addDoc(colRef, {
+                        Name : name,
+                        Surname : surname,
+                        Address1 : address1,
+                        Address2 : address2,
+                        City : city,
+                        Zip : zip,
+                        // ...
+                    });
+            
+                    console.log("Document written with ID: ", docRef.id);
+            
+                    // You can also retrieve the added document by its ID
+                    const addedDoc = await getDoc(docRef);
+                    console.log("Added document data: ", addedDoc.data());
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                }
+            });
+        } else {
+            // ในกรณีที่ user sign out
+            alert("User not authenticated!");
+            // ไปหน้าล็อคอิน
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+</html>
