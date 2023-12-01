@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap framework -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2 class="text-center">Register</h2>
+        <!-- เพิ่มฟอร์ม Register ตามตัวอย่างที่ได้ให้ไว้ก่อนหน้านี้ -->
+        <div class="form-group">
+            <label for="register_email">Email:</label>
+            <input type="text" class="form-control" id="register_email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="register_password">Password:</label>
+            <input type="password" class="form-control" id="register_password" placeholder="Enter your password">
+        </div>
+        <button type="button" class="btn btn-success btn-block" onclick="register()">Register</button>
+    </div>
+
+    <script type="module" src="register.js"></script>
+</body>
+</html>
