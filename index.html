@@ -1,158 +1,94 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>This is Home page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- ตรงนี้ คือ frame work ครับจริงไม่ใช้ก็ได้ถ้าเป็นคนจริงพอ แต่ผมไม่ไหวจริงเขียนยาก -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bo  otstrap.min.js"></script>
-</head>
-<body>
-    <h1>This is Home page</h1>
-    
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <title>Carbon Credit</title>
+  </head>
 
-    <a href="login.html">Login</a>
-
-
-
-</body>
-<script type="module">
-    //แนะนำว่าช่วงนี้อย่าไปยุ่งนะครับแค่ ก็อปไปเลย
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs , getDoc ,addDoc} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
-
-    
-    const firebaseConfig = {
-        apiKey: "AIzaSyDzTMrDk0uBKVHP_K2ntweZbSfBbLYyZQQ",
-        authDomain: "tobe-f2afc.firebaseapp.com",
-        projectId: "tobe-f2afc",
-        storageBucket: "tobe-f2afc.appspot.com",
-        messagingSenderId: "155536749020",
-        appId: "1:155536749020:web:d9285947c53fef43b7df19",
-        measurementId: "G-KLYCLFZXSW"
-    };
-    
-    //การ initilize ต่างๆ 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore(app);
-
-    //จริงๆ ตรงนี้ไม่ได้ใช้
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-    
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // เช็คว่า ล็อคอิน ดู component ในเว็ปได้
-            console.log("User information retrieved:", user);
-            alert("OK!");
-
-            //ส่วนนี้คือการ แสดง Data ออกมาในรูปอะไรก็ได้ครับ
-            document.getElementById("retrieveDataButton").addEventListener("click", async () => {
-                const loginName = user.email;
-
-                //กันหาไม่เจอเฉยๆ ไม่มีอะไร
-                if (!loginName) {
-                    console.error("Login name not available for the user.");
-                    return;
-                }
-
-                //ขอ Data จาก server | ลองไปดูใน Fire store ได้จะเข้าใจมากขึ้น
-                const colRef = collection(db, `users/${loginName}/additionalData`);
-
-                try {
-                    //ดึง object มา
-                    const querySnapshot = await getDocs(colRef);
-
-                   //สร้าง div เปล่า
-                    const userDataContainer = document.getElementById("userDataContainer");
-                    userDataContainer.innerHTML = ""; // Clear previous content
-
-                    //ดู Data แต่ละ document
-                    querySnapshot.forEach((doc) => {
-                        console.log(doc.id, " => ", doc.data());
-
-                        //สร้าง div ตรงนี้เป็นอะไรก็ได้ตามสะดวกเลยครับ
-                        const card = document.createElement("div");
-                        card.classList.add("card"); //ใส่ class ให้น้อง
-
-                        const userData = doc.data();
-
-                        console.log(doc);
-
-                        const userEmail = userData.email;
-                        
-                        //เขียนอะไรก็ได้ตามที่ต้องการ เสมือนเขียนลง div (ในแต่ละ card)
-                        card.innerHTML = `
-                            <div class="card-body">
-                                <h5 class="card-title">${userEmail}</h5>
-                                <p class="card-text">${JSON.stringify(doc.data())}</p>
-                            </div>
-                        `;
-                        
-                        //ใส่ลง div ใหญ่
-                        userDataContainer.appendChild(card);
-                    });
-                } catch (error) {
-                    console.error("Error getting documents: ", error);
-                }
-            });
-
-
-
-            document.getElementById("addDataButton").addEventListener("click", async () => {
-                const userEmail = user.email;
-                var name =  document.getElementById("name").value;
-                var surname = document.getElementById("surname").value;
-                var address1 = document.getElementById("inputAddress").value;
-                var address2 = document.getElementById("inputAddress2").value;
-                var city = document.getElementById("inputCity").value;
-                var zip = document.getElementById("inputZip").value;
-
-                if (!userEmail) {
-                    console.error("User email not available.");
-                    return;
-                }
-            
-                const colRef = collection(db, `users/${userEmail}/additionalData`);
-            
-                try {
-                    
-                    const colSnapshot = await getDocs(colRef);
-            
-                    if (colSnapshot.empty) {
-                        
-                        await setDoc(colRef, {});
-                    }
-            
-                    // Add data to the collection
-                    const docRef = await addDoc(colRef, {
-                        Name : name,
-                        Surname : surname,
-                        Address1 : address1,
-                        Address2 : address2,
-                        City : city,
-                        Zip : zip,
-                        // ...
-                    });
-            
-                    console.log("Document written with ID: ", docRef.id);
-            
-                    // You can also retrieve the added document by its ID
-                    const addedDoc = await getDoc(docRef);
-                    console.log("Added document data: ", addedDoc.data());
-                } catch (error) {
-                    console.error("Error adding document: ", error);
-                }
-            });
-        } else {
-            // ในกรณีที่ user sign out
-            alert("User not authenticated!");
-            // ไปหน้าล็อคอิน
-            //window.location.href = 'login.html';
-        }
-    });
-</script>
+  <body>
+    <div class="header">
+      <div class="container">
+        <!-- navbar  -->
+        <div class="navbar d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <span>Start Selling</span>
+            <div class="hr1 mx-2"></div>
+            <span>Download</span>
+            <div class="hr1 mx-2"></div>
+            <span>Contract us</span>
+            <img
+              class="icon-media mr-2 ml-2"
+              src="assets/Facebook (2).png"
+              alt=""
+            />
+            <img class="icon-media mr-2" src="assets/IG.png" alt="" />
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="mr-4">Notification</span>
+            <span class="mr-4">Help</span>
+            <a class="logo" href="./login.html">Login</a>
+            <div class="hr1 mx-2"></div>
+            <span class="font-weight-bold">Register</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center mt-4">
+          <div class="d-flex align-items-center">
+            <img class="brand-img mr-2" src="assets/D.png" alt="" />
+            <span class="text-brand">Carbon Credit</span>
+          </div>
+          <div class="wrap-navbar-input">
+            <div class="wrap-search">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Here"
+              />
+              <div class="wrap-icon-s">
+                <img class="icon-media" src="assets/เเว่นขยาย.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <img class="icon-shop" src="assets/Truck.png" alt="" />
+          <div class ="Truckcount"> 5 </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="CONTAINER">
+    <div class="sidebar">
+      <br></br>
+      <br></br>
+      <br></br>
+      <a href="./index.html" class="sidebar-items">
+        Home
+      </a>
+      <a href="./Product.html" class="sidebar-items">
+        All Product
+      </a>
+      <a href="#" class="sidebar-items">
+        How to use
+      </a>
+      <a href="#" class="sidebar-items">
+        Calculate Carbon Credits
+      </a>
+    </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
+
