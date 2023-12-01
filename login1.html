@@ -78,15 +78,15 @@
           var password = document.getElementById("password").value;
           
           //ฟังชั่นการ sign up ครับ
-          createUserWithEmailAndPassword(auth, email, password)
+          signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             
             //สร้างครับ
             const user = userCredential.user;
-            console.log(user);
+            console.log("user is ",user);
 
             //ไปหน้าถัดไปครับ
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
 
             //แจ้งเตือน user ว่าโอเคแล้ว
             alert("Login successfully!!");
