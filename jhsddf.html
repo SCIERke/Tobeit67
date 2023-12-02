@@ -56,7 +56,8 @@
     //แนะนำว่าช่วงนี้อย่าไปยุ่งนะครับแค่ ก็อปไปเลย
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs , getDoc ,addDoc} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs , doc, addDoc} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+
 
     
     const firebaseConfig = {
@@ -108,7 +109,7 @@
             
                     if (colSnapshot.empty) {
                         
-                        await setDoc(colRef, {});
+                        await addDoc(colRef, {});
                     }
             
                     // Add data to the collection
