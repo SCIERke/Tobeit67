@@ -24,6 +24,18 @@
             font-size: 3em;
         }
 
+        /* การตั้งค่าสไตล์ของปุ่ม Home */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 200px; /* ปรับตำแหน่งของปุ่ม Home ตามต้องการ */
+        }
+
+        .btn-home {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
         /* การตั้งค่าสไตล์ของปุ่ม Login */
         .login-button {
             position: absolute;
@@ -40,10 +52,34 @@
         .register-button {
             position: absolute;
             top: 20px;
-            right: 100px; /* ปรับตำแหน่งของปุ่ม Register โดยเพิ่มค่า right ที่ใหญ่ขึ้น */
+            right: 100px;
         }
 
         .btn-register {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม How to use */
+        .how-to-use-button {
+            position: absolute;
+            top: 20px;
+            right: 280px; /* ปรับตำแหน่งของปุ่ม How to use ตามต้องการ */
+        }
+
+        .btn-how-to-use {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม Logout */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 400px; /* ปรับตำแหน่งของปุ่ม Logout ตามต้องการ */
+        }
+
+        .btn-logout {
             background-color: #4caf50;
             color: #fff;
         }
@@ -51,6 +87,11 @@
 </head>
 <body>
     <center><h1>CARBON CREDITS</h1></center>
+
+    <!-- ปุ่ม Home -->
+    <div class="home-button">
+        <button type="button" class="btn btn-home" onclick="redirectHome()">Home</button>
+    </div>
 
     <!-- ปุ่ม Login -->
     <div class="login-button">
@@ -62,8 +103,23 @@
         <button type="button" class="btn btn-register" onclick="redirectRegister()">Register</button>
     </div>
 
+    <!-- ปุ่ม How to use -->
+    <div class="how-to-use-button">
+        <button type="button" class="btn btn-how-to-use" onclick="redirectToHowToUse()">How to use</button>
+    </div>
+
+    <!-- ปุ่ม Logout -->
+    <div class="logout-button">
+        <button type="button" class="btn btn-logout" onclick="logout()">Logout</button>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+        function redirectHome() {
+            // ไปที่หน้า Home
+            window.location.href = 'home.html';
+        }
+
         function redirectLogin() {
             // ไปที่หน้า Login
             window.location.href = 'login.html';
@@ -72,6 +128,19 @@
         function redirectRegister() {
             // ไปที่หน้า Register
             window.location.href = 'register.html';
+        }
+
+        function redirectToHowToUse() {
+            // ไปที่หน้า How to use
+            window.location.href = 'how-to-use.html';
+        }
+
+        function logout() {
+            // ตรวจสอบหรือลบข้อมูลเซสชันตามความเหมาะสม
+            // ตัวอย่าง: localStorage.removeItem('userToken');
+            // หรือทำการเรียก API หรือการลบเซสชันในระบบ
+            // หลังจากนั้นนำไปยังหน้า Login หรือหน้าอื่นๆ ตามที่คุณต้องการ
+            window.location.href = 'login.html';
         }
 
         // (Firebase Code ที่คุณได้มาก่อนหน้านี้)
