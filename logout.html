@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Carbon Credits Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap framework -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.seub.or.th/seubweb/wp-content/uploads/2021/08/cover.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-top: 30vh;
+            font-size: 3em;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม Home */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 200px; /* ปรับตำแหน่งของปุ่ม Home ตามต้องการ */
+        }
+
+        .btn-home {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม Login */
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .btn-login {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม Register */
+        .register-button {
+            position: absolute;
+            top: 20px;
+            right: 100px;
+        }
+
+        .btn-register {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม How to use */
+        .how-to-use-button {
+            position: absolute;
+            top: 20px;
+            right: 280px; /* ปรับตำแหน่งของปุ่ม How to use ตามต้องการ */
+        }
+
+        .btn-how-to-use {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* การตั้งค่าสไตล์ของปุ่ม Logout */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 400px; /* ปรับตำแหน่งของปุ่ม Logout ตามต้องการ */
+        }
+
+        .btn-logout {
+            background-color: #4caf50;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>CARBON CREDITS</h1></center>
+
+    <!-- ปุ่ม Home -->
+    <div class="home-button">
+        <button type="button" class="btn btn-home" onclick="redirectHome()">Home</button>
+    </div>
+
+    <!-- ปุ่ม Login -->
+    <div class="login-button">
+        <button type="button" class="btn btn-login" onclick="redirectLogin()">Login</button>
+    </div>
+
+    <!-- ปุ่ม Register -->
+    <div class="register-button">
+        <button type="button" class="btn btn-register" onclick="redirectRegister()">Register</button>
+    </div>
+
+    <!-- ปุ่ม How to use -->
+    <div class="how-to-use-button">
+        <button type="button" class="btn btn-how-to-use" onclick="redirectToHowToUse()">How to use</button>
+    </div>
+
+    <!-- ปุ่ม Logout -->
+    <div class="logout-button">
+        <button type="button" class="btn btn-logout" onclick="logout()">Logout</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function redirectHome() {
+            // ไปที่หน้า Home
+            window.location.href = 'home.html';
+        }
+
+        function redirectLogin() {
+            // ไปที่หน้า Login
+            window.location.href = 'login.html';
+        }
+
+        function redirectRegister() {
+            // ไปที่หน้า Register
+            window.location.href = 'register.html';
+        }
+
+        function redirectToHowToUse() {
+            // ไปที่หน้า How to use
+            window.location.href = 'how-to-use.html';
+        }
+
+        function logout() {}
+            // ลบข้อมูลการเข้าสู่ระบบ (
