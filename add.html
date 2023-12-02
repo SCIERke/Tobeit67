@@ -43,6 +43,10 @@
         <input type="contact" class="form-control" id="contact" placeholder="contact">
         <label for="floatingPassword">contact</label>
       </div>
+    <div class="form-floating">
+        <input type="price" class="form-control" id="price" placeholder="price">
+        <label for="floatingPassword">price</label>
+      </div>
 
     <button type="button" id="submitbt" name="submit" class="btn btn-success">Submit</button>
     
@@ -94,6 +98,7 @@
                 var address = document.getElementById("address").value;
                 var carbon = document.getElementById("carbon").value;
                 var contact = document.getElementById("contact").value;
+                var contact = document.getElementById("price").value;
 
                 if (!userEmail) {
                     console.error("User email not available.");
@@ -118,6 +123,7 @@
                         Address : address,
                         Carboncredits : carbon,
                         Contact : contact,
+                        Price : price,
                         // ...
                     });
             
