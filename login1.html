@@ -72,24 +72,24 @@
 
 
         //ฟังชั่น สร้างแอคเค้า
-        document.getElementById("login").addEventListener("click", function() {
+        document.getElementById("register").addEventListener("click", function() {
           //ดึง data จาก id
           var email =  document.getElementById("email").value;
           var password = document.getElementById("password").value;
           
           //ฟังชั่นการ sign up ครับ
-          signInWithEmailAndPassword(auth, email, password)
+          createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             
             //สร้างครับ
             const user = userCredential.user;
-            console.log("user is ",user);
+            console.log(user);
 
             //ไปหน้าถัดไปครับ
             window.location.href = 'index.html';
 
             //แจ้งเตือน user ว่าโอเคแล้ว
-            alert("Login successfully!!");
+            alert("Registration successfully!!");;
           })
           .catch((error) => {
             const errorCode = error.code;
